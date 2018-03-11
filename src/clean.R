@@ -24,7 +24,10 @@ master <- left_join(studentInfo_c, studentRegistration) %>%
   left_join(., master_assessment, by = c("code_module", "code_presentation", "id_student"))
 
 master_filtered <- master %>% 
-  select(-date.x, -id_site, -id_assessment, -is_banked,
+  select(-date.x, -id_site, -is_banked,
          -week_from, -week_to) %>% 
-  rename(deadline = date.y)
+  rename(deadline = date.y) %>% 
+  filter(code_presentation == "2014J",
+         code_module %in% c("AAA", "BBB", "GGG"))
 
+write_csv(master_filtered, "data/clean_data.csv")
